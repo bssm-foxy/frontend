@@ -71,22 +71,26 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleCall = () => {
-    setLoading(true);
-    const data = {
-      start_point: departure,
-      finish_point: destination
-    };
+    if (departure != destination){
+      setLoading(true);
+      const data = {
+        start_point: departure,
+        finish_point: destination
+      };
 
-    axios.post('https://your-api-endpoint.com/endpoint', data)
-      .then(response => {
-        console.log('성공:', response.data);
-        setLoading(false);
-        navigate('/load'); // 성공 시 /load 페이지로 이동
-      })
-      .catch(error => {
-        console.error('에러:', error);
-        setLoading(false);
-      });
+      axios.post('http://10.150.149.248:8080/point', data)
+        .then(response => {
+          console.log('성공:', response.data);
+          setLoading(false);
+          navigate('/load'); // 성공 시 /load 페이지로 이동
+        })
+        .catch(error => {
+          console.error('에러:', error);
+          setLoading(false);
+        });
+    }else{
+      alert('출발지와 도착지를 확인해주세요');
+    }
   };
 
   return (
@@ -97,17 +101,23 @@ const Home = () => {
       <Title>Home Page</Title>
       <Dropdown value={departure} onChange={(e) => setDeparture(e.target.value)}>
         <option value="">출발지 입력</option>
-        <option value="3-1">3-1</option>
-        <option value="3-2">3-2</option>
-        <option value="3-3">3-3</option>
-        <option value="3-4">3-4</option>
+        <option value="임베과 사무실">임베과 사무실</option>
+        <option value="임베실">임베실</option>
+        <option value="도서관">도서관</option>
+        <option value="IoT실">IoT실</option>
+        <option value="엘리베이터">엘리베이터</option>
+        <option value="헬스장">헬스장</option>
+        <option value="마프실">마프실</option>
       </Dropdown>
       <Dropdown value={destination} onChange={(e) => setDestination(e.target.value)}>
-        <option value="">출발지 입력</option>
-        <option value="3-1">3-1</option>
-        <option value="3-2">3-2</option>
-        <option value="3-3">3-3</option>
-        <option value="3-4">3-4</option>
+        <option value="">도착지 입력</option>
+        <option value="임베과 사무실">임베과 사무실</option>
+        <option value="임베실">임베실</option>
+        <option value="도서관">도서관</option>
+        <option value="IoT실">IoT실</option>
+        <option value="엘리베이터">엘리베이터</option>
+        <option value="헬스장">헬스장</option>
+        <option value="마프실">마프실</option>
       </Dropdown>
       <Button onClick={handleCall}>호출하기</Button>
     </Container>
